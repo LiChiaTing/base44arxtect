@@ -1,0 +1,27 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+
+export default function LatexEditor() {
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="container mx-auto py-16 px-6 text-center"
+    >
+      <h1 className="text-4xl md:text-5xl font-bold text-[#01102C] mb-6">ArXtect LaTeX Editor</h1>
+      <p className="text-xl text-[#687B98] max-w-3xl mx-auto">
+        Experience a clean, distraction-free LaTeX environment with intelligent AI assistance and real-time compilation.
+      </p>
+      
+      <div className="mt-12 bg-slate-100/50 rounded-2xl p-8 h-96 flex items-center justify-center border border-slate-200 shadow-inner">
+        <p className="text-slate-500 text-2xl font-medium">Interactive Editor Preview Coming Soon...</p>
+      </div>
+
+      <p className="text-lg text-slate-600 mt-8 max-w-2xl mx-auto">
+        Discover features like context-aware AI suggestions, live PDF preview, and integrated version control designed to accelerate your research.
+      </p>
+    </motion.div>
+  );
+}
+

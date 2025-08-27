@@ -1,0 +1,86 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { Github, Mail, Twitter, Linkedin } from "lucide-react";
+
+export default function FooterSection() {
+  return (
+    <footer className="bg-[#01102C] text-white py-16 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-4 gap-8 mb-12">
+          {/* Brand */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-r from-[#86BBFF] to-[#BA2377] rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">A</span>
+              </div>
+              <h3 className="text-2xl font-bold">ArXtect</h3>
+            </div>
+            <p className="text-gray-400 leading-relaxed">
+              Built with love by researchers for researchers. Streamlining LaTeX workflows with AI and modern technology.
+            </p>
+          </div>
+
+          {/* Product */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold">Product</h4>
+            <ul className="space-y-2 text-gray-400">
+              <li><a href="#" className="hover:text-[#86BBFF] transition-colors">Features</a></li>
+              <li><a href="#" className="hover:text-[#86BBFF] transition-colors">Pricing</a></li>
+              <li><a href="#" className="hover:text-[#86BBFF] transition-colors">Documentation</a></li>
+              <li><a href="#" className="hover:text-[#86BBFF] transition-colors">API</a></li>
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold">Company</h4>
+            <ul className="space-y-2 text-gray-400">
+              <li><a href="#" className="hover:text-[#86BBFF] transition-colors">About</a></li>
+              <li><a href="#" className="hover:text-[#86BBFF] transition-colors">Blog</a></li>
+              <li><a href="#" className="hover:text-[#86BBFF] transition-colors">Careers</a></li>
+              <li><a href="#" className="hover:text-[#86BBFF] transition-colors">Contact</a></li>
+            </ul>
+          </div>
+
+          {/* Connect */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold">Connect</h4>
+            <div className="flex space-x-4">
+              <a href="#" className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-[#86BBFF] transition-colors group">
+                <Github className="w-5 h-5 group-hover:text-white" />
+              </a>
+              <a href="#" className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-[#86BBFF] transition-colors group">
+                <Twitter className="w-5 h-5 group-hover:text-white" />
+              </a>
+              <a href="#" className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-[#86BBFF] transition-colors group">
+                <Linkedin className="w-5 h-5 group-hover:text-white" />
+              </a>
+              <a href="#" className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-[#86BBFF] transition-colors group">
+                <Mail className="w-5 h-5 group-hover:text-white" />
+              </a>
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm text-gray-400">Built by Researchers, for Researchers</p>
+              <p className="text-sm text-gray-500">We believe academic writing tools should be fast, collaborative, and a joy to use.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-white/10 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="flex space-x-6 text-sm text-gray-400">
+              <a href="#" className="hover:text-[#86BBFF] transition-colors">About</a>
+              <a href="#" className="hover:text-[#86BBFF] transition-colors">Contact</a>
+              <a href="#" className="hover:text-[#86BBFF] transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-[#86BBFF] transition-colors">GitHub</a>
+            </div>
+            <div className="text-sm text-gray-500">
+              © 2025 ArXtect. All rights reserved.
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

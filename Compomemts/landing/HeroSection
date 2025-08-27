@@ -1,0 +1,178 @@
+import React, { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+
+const codeLines = [
+  { line: 1, text: "% Welcome to", indent: 0, color: "text-gray-400" },
+  { line: 2, text: "\\documentclass{", indent: 0, color: "text-[#1B4B91]", children: [{ text: "arXtect", color: "text-blue-400" }, { text: "}", color: "text-[#1B4B91]" }] },
+  { line: 3, text: "", indent: 0 },
+  { line: 4, text: "\\title{", indent: 0, color: "text-[#1B4B91]", children: [{ text: "Write smarter, compile faster", color: "text-black font-semibold" }, { text: "}", color: "text-[#1B4B91]" }] },
+  { line: 5, text: "\\author{", indent: 0, color: "text-[#1B4B91]", children: [{ text: "You and your AI assistance", color: "text-black font-semibold" }, { text: "}", color: "text-[#1B4B91]" }] },
+  { line: 6, text: "", indent: 0 },
+  { line: 7, text: "\\begin{document}", indent: 0, color: "text-[#1B4B91]" },
+  { line: 8, text: "Start writing now", indent: 2, color: "text-[#BA2377] font-semibold", children: [{ text: " →", color: "text-[#BA2377]" }] },
+  { line: 9, text: "\\end{document}", indent: 0, color: "text-[#1B4B91]" },
+  { line: 10, text: "", indent: 0 },
+];
+
+const LINE_HEIGHT_REM = 1.75;
+
+export default function HeroSection({ isVisible }) {
+  const [activeLine, setActiveLine] = useState(null);
+  const [showTitle, setShowTitle] = useState(false);
+  const [showAuthor, setShowAuthor] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+  const timeoutsRef = useRef([]);
+
+  useEffect(() => {
+    const resetAnimation = () => {
+      timeoutsRef.current.forEach(clearTimeout);
+      timeoutsRef.current = [];
+      setActiveLine(null);
+      setShowTitle(false);
+      setShowAuthor(false);
+      setShowButton(false);
+    };
+
+    const startAnimation = () => {
+      resetAnimation();
+
+      const t1 = setTimeout(() => setActiveLine(2), 500);
+      const t2 = setTimeout(() => {
+        setActiveLine(4);
+        setShowTitle(true);
+      }, 2000);
+      const t3 = setTimeout(() => {
+        setActiveLine(5);
+        setShowAuthor(true);
+      }, 3500);
+      const t4 = setTimeout(() => {
+        setActiveLine(8);
+        setShowButton(true);
+      }, 5000);
+
+      timeoutsRef.current = [t1, t2, t3, t4];
+    };
+
+    if (isVisible) {
+      startAnimation();
+    } else {
+      resetAnimation();
+    }
+
+    return () => {
+      timeoutsRef.current.forEach(clearTimeout);
+    };
+  }, [isVisible]);
+
+  return (
+    <section id="hero" className="relative min-h-screen flex items-center justify-center p-6 pt-24 lg:pt-16">
+      {/* Blue dots background - writing paper feel */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(27,75,145,0.08)_1px,transparent_0)] bg-[length:25px_25px]" />
+      
+      <div className="max-w-6xl w-full mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
+        {/* Left Side: Animated Code Editor */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative bg-white/80 backdrop-blur-sm shadow-2xl rounded-2xl p-6 border"
+        >
+          <div className="relative font-mono text-base leading-7">
+            {/* Highlight bar */}
+            <AnimatePresence>
+              {activeLine !== null && (
+                <motion.div
+                  className="absolute left-0 right-0 bg-slate-200/70 rounded-md"
+                  initial={{ opacity: 0, y: (codeLines.findIndex(l => l.line === activeLine) * LINE_HEIGHT_REM) + 'rem' }}
+                  animate={{
+                    opacity: 1,
+                    y: (codeLines.findIndex(l => l.line === activeLine) * LINE_HEIGHT_REM) + 'rem',
+                    height: LINE_HEIGHT_REM + 'rem',
+                  }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  exit={{ opacity: 0 }}
+                />
+              )}
+            </AnimatePresence>
+
+            {/* Code Lines */}
+            <div className="relative z-10 flex">
+              <div className="text-right text-gray-400 select-none pr-4 min-w-[2rem]">
+                {codeLines.map(l => (
+                  <div key={`num-${l.line}`} className="h-7 flex items-center justify-end">
+                    {l.line}
+                  </div>
+                ))}
+              </div>
+              <div>
+                {codeLines.map(l => (
+                  <div key={`code-${l.line}`} className="h-7 flex items-center" style={{ paddingLeft: `${l.indent * 0.5}rem` }}>
+                    <span className={l.color}>{l.text}</span>
+                    {l.children && l.children.map((child, i) => (
+                      <span key={i} className={child.color}>{child.text}</span>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+        
+        {/* Right Side: Output */}
+        <div className="relative text-center lg:text-left">
+          <AnimatePresence>
+            {showTitle && (
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-5xl md:text-7xl font-bold text-[#1B4B91] leading-tight"
+              >
+                Write Smarter.
+                <br />
+                Compile Faster.
+              </motion.h1>
+            )}
+          </AnimatePresence>
+
+          <div className="h-12 mt-4">
+            <AnimatePresence>
+              {showAuthor && (
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-xl md:text-2xl text-[#687B98]"
+                >
+                  You and your AI assistance
+                </motion.p>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className="h-20 mt-6">
+            <AnimatePresence>
+              {showButton && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Button
+                    size="lg"
+                    className="bg-[#BA2377] hover:bg-[#BA2377]/90 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-2xl hover:shadow-xl transition-all duration-300 group"
+                  >
+                    Start writing now
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

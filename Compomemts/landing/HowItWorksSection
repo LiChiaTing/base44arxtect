@@ -1,0 +1,100 @@
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { Edit3, Brain, Zap, ArrowRight } from "lucide-react";
+
+const steps = [
+  {
+    number: "01",
+    title: "Start Writing Instantly",
+    description: "No setup. Log in and begin writing in a clean, distraction-free LaTeX environment.",
+    icon: Edit3,
+    color: "from-[#1B4B91] to-[#86BBFF]"
+  },
+  {
+    number: "02", 
+    title: "Get Smart Suggestions",
+    description: "ArXtect assists with context-aware AI prompts, citations, and formatting.",
+    icon: Brain,
+    color: "from-[#86BBFF] to-[#BA2377]"
+  },
+  {
+    number: "03",
+    title: "Compile in Real-Time",
+    description: "Your PDF output is ready in seconds — powered by WebAssembly for maximum speed.",
+    icon: Zap,
+    color: "from-[#BA2377] to-[#1B4B91]"
+  }
+];
+
+export default function HowItWorksSection({ isVisible }) {
+  return (
+    <section id="howItWorks" className="py-20 px-6 relative">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold text-[#01102C] mb-6">
+            How It Works
+          </h2>
+          <p className="text-xl text-[#687B98] max-w-3xl mx-auto">
+            From Idea to Publication in Three Steps
+          </p>
+          <p className="text-lg text-[#687B98] mt-4 max-w-4xl mx-auto">
+            ArXtect streamlines your research workflow with intelligent automation and lightning-fast performance.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-8 relative">
+          {/* Connection Lines */}
+          <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-[#1B4B91]/20 via-[#86BBFF]/40 to-[#BA2377]/20 transform -translate-y-1/2 z-0" />
+          
+          {steps.map((step, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
+              className="relative z-10"
+            >
+              <Card className="relative overflow-hidden bg-white/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group hover:-translate-y-2">
+                <div className={`absolute inset-0 bg-gradient-to-br ${step.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                
+                <CardHeader className="relative z-10 pb-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center shadow-lg`}>
+                      <step.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <div className="text-6xl font-bold text-[#687B98]/20 leading-none">
+                      {step.number}
+                    </div>
+                  </div>
+                  <CardTitle className="text-xl font-bold text-[#01102C] group-hover:text-[#1B4B91] transition-colors">
+                    {step.title}
+                  </CardTitle>
+                </CardHeader>
+                
+                <CardContent className="relative z-10">
+                  <p className="text-[#687B98] leading-relaxed">
+                    {step.description}
+                  </p>
+                </CardContent>
+                
+                {index < steps.length - 1 && (
+                  <div className="absolute -right-4 top-1/2 transform -translate-y-1/2 hidden md:flex">
+                    <div className="w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
+                      <ArrowRight className="w-4 h-4 text-[#86BBFF]" />
+                    </div>
+                  </div>
+                )}
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

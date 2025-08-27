@@ -1,0 +1,127 @@
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import { Zap, Brain, Cloud, Users, Gauge, Sparkles } from "lucide-react";
+
+const benefits = [
+  {
+    title: "Blazing Fast",
+    description: "Compile 2x faster than legacy LaTeX tools.",
+    icon: Zap,
+    metric: "2x faster",
+    color: "bg-gradient-to-br from-[#BA2377] to-[#BA2377]/80"
+  },
+  {
+    title: "AI Assistance", 
+    description: "Get smart, context-aware suggestions without interrupting your flow.",
+    icon: Brain,
+    metric: "Smart AI",
+    color: "bg-gradient-to-br from-[#1B4B91] to-[#86BBFF]"
+  },
+  {
+    title: "No Setup Required",
+    description: "Cloud-based, always up to date.",
+    icon: Cloud,
+    metric: "Zero config",
+    color: "bg-gradient-to-br from-[#86BBFF] to-[#86BBFF]/80"
+  },
+  {
+    title: "Built for Collaboration",
+    description: "Invite co-authors. Edit in real time.",
+    icon: Users,
+    metric: "Real-time",
+    color: "bg-gradient-to-br from-[#1B4B91] to-[#BA2377]"
+  }
+];
+
+export default function WhyArxtectSection({ isVisible }) {
+  return (
+    <section id="whyArxtect" className="py-20 px-6 bg-gradient-to-br from-white to-slate-50">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <Badge className="mb-6 text-sm px-4 py-2 bg-[#86BBFF]/20 text-[#1B4B91] border-[#86BBFF]/30">
+            <Sparkles className="w-4 h-4 mr-2" />
+            Why Choose ArXtect
+          </Badge>
+          <h2 className="text-3xl md:text-5xl font-bold text-[#01102C] mb-6">
+            Built for Modern Research
+          </h2>
+          <p className="text-xl text-[#687B98] max-w-3xl mx-auto">
+            Every feature designed to eliminate friction and enhance your research workflow.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {benefits.map((benefit, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              animate={isVisible ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.8, delay: index * 0.1 }}
+            >
+              <Card className="relative overflow-hidden bg-white/80 backdrop-blur-sm border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group h-full">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#1B4B91]/5 to-[#86BBFF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <CardHeader className="relative z-10 pb-4">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`w-16 h-16 rounded-2xl ${benefit.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      <benefit.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <Badge variant="outline" className="bg-white/60 backdrop-blur-sm border-[#86BBFF]/30 text-[#1B4B91] font-semibold">
+                      {benefit.metric}
+                    </Badge>
+                  </div>
+                  <CardTitle className="text-2xl font-bold text-[#01102C] group-hover:text-[#1B4B91] transition-colors">
+                    {benefit.title}
+                  </CardTitle>
+                </CardHeader>
+                
+                <CardContent className="relative z-10">
+                  <p className="text-[#687B98] text-lg leading-relaxed">
+                    {benefit.description}
+                  </p>
+                </CardContent>
+
+                {/* Decorative gradient line */}
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1B4B91] via-[#86BBFF] to-[#BA2377] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Performance Metrics */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-16"
+        >
+          <Card className="bg-gradient-to-r from-[#1B4B91] to-[#86BBFF] text-white border-0 shadow-2xl">
+            <CardContent className="py-12">
+              <div className="grid md:grid-cols-3 gap-8 text-center">
+                <div className="space-y-2">
+                  <div className="text-4xl font-bold">2x</div>
+                  <div className="text-lg opacity-90">Faster Compilation</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-4xl font-bold">95%</div>
+                  <div className="text-lg opacity-90">Reduced Setup Time</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-4xl font-bold">100%</div>
+                  <div className="text-lg opacity-90">Cloud-Based</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

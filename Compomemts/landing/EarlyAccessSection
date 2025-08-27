@@ -1,0 +1,129 @@
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import { Mail, Users, Sparkles, ArrowRight } from "lucide-react";
+
+export default function EarlyAccessSection({ isVisible }) {
+  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [notifications, setNotifications] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email) {
+      setIsSubmitted(true);
+      // Here you would typically send the email to your backend
+      setTimeout(() => setIsSubmitted(false), 3000);
+    }
+  };
+
+  return (
+    <section id="earlyAccess" className="py-20 px-6 bg-gradient-to-br from-[#1B4B91] to-[#01102C] text-white relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(134,187,255,0.1)_0%,transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(186,35,119,0.1)_0%,transparent_50%)]" />
+      
+      <div className="max-w-4xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center space-y-8"
+        >
+          <Badge className="mx-auto bg-[#86BBFF]/20 text-[#86BBFF] border-[#86BBFF]/30 px-4 py-2">
+            <Users className="w-4 h-4 mr-2" />
+            Limited Early Access
+          </Badge>
+          
+          <div className="space-y-6">
+            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+              Be the First to Use the
+              <br />
+              <span className="bg-gradient-to-r from-[#86BBFF] to-[#BA2377] bg-clip-text text-transparent">
+                Future of LaTeX Editing
+              </span>
+            </h2>
+            
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Join our early access list — no spam, just science. Get notified when ArXtect is ready for your research.
+            </p>
+          </div>
+
+          <Card className="bg-white/10 backdrop-blur-lg border-white/20 shadow-2xl max-w-2xl mx-auto">
+            <CardContent className="p-8">
+              {!isSubmitted ? (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <Input
+                      type="email"
+                      placeholder="Enter your research email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="pl-12 h-14 text-lg bg-white/20 border-white/30 text-white placeholder-gray-400 focus:bg-white/30 focus:border-[#86BBFF] transition-all duration-300"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="flex items-center gap-3 text-left">
+                    <input
+                      type="checkbox"
+                      id="notifications"
+                      checked={notifications}
+                      onChange={(e) => setNotifications(e.target.checked)}
+                      className="w-4 h-4 accent-[#86BBFF]"
+                    />
+                    <label htmlFor="notifications" className="text-sm text-gray-300 cursor-pointer">
+                      Notify me about early access and updates
+                    </label>
+                  </div>
+                  
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-[#BA2377] to-[#BA2377]/80 hover:from-[#BA2377]/90 hover:to-[#BA2377]/70 text-white border-0 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
+                  >
+                    <Sparkles className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
+                    Get Early Access
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </form>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-8 space-y-4"
+                >
+                  <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">You're In!</h3>
+                  <p className="text-gray-300">
+                    We'll notify you as soon as ArXtect is ready for early access.
+                  </p>
+                </motion.div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Trust Indicators */}
+          <div className="pt-8 space-y-4 text-center">
+            <p className="text-sm text-gray-400">Join researchers from top institutions already on our waitlist</p>
+            <div className="flex justify-center items-center space-x-6 text-gray-300">
+              <span className="text-sm font-medium">500+ researchers</span>
+              <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
+              <span className="text-sm font-medium">No spam, ever</span>
+              <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
+              <span className="text-sm font-medium">Early access priority</span>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

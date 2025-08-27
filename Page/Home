@@ -1,0 +1,43 @@
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+
+import HeroSection from "../components/landing/HeroSection";
+import HowItWorksSection from "../components/landing/HowItWorksSection";
+import WhyArxtectSection from "../components/landing/WhyArxtectSection";
+import FeaturesPreview from "../components/landing/FeaturesPreview";
+import EarlyAccessSection from "../components/landing/EarlyAccessSection";
+import FooterSection from "../components/landing/FooterSection";
+
+export default function Home() {
+  const [isVisible, setIsVisible] = useState({});
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsVisible(prev => ({
+            ...prev,
+            [entry.target.id]: entry.isIntersecting
+          }));
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const sections = document.querySelectorAll('[id]');
+    sections.forEach(section => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div>
+      <HeroSection isVisible={isVisible.hero} />
+      <HowItWorksSection isVisible={isVisible.howItWorks} />
+      <WhyArxtectSection isVisible={isVisible.whyArxtect} />
+      <FeaturesPreview isVisible={isVisible.features} />
+      <EarlyAccessSection isVisible={isVisible.earlyAccess} />
+      <FooterSection />
+    </div>
+  );
+}
